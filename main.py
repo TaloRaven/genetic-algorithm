@@ -7,7 +7,7 @@ def main():
     b1=BasePop(m1,5).rate()
     t1=TournamentSelection(3,5,b1).sellect_winners()
     print('\nMatrix \n')
-    print(m1)
+    [print(x) for x in m1]
     print('\nBase population \n')
     [print(x) for x in b1]
     print('\nTournament selecton \n')
