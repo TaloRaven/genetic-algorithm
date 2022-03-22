@@ -75,7 +75,7 @@ class TournamentSelection():
                 else:
                     continue
             if len(winner) != 1:
-                winner=[random.choice(winner)]
+                winner = [random.choice(winner)]
             winners.append(winner)
         return [item for sublist in winners for item in sublist]
 
@@ -93,4 +93,10 @@ class CX():
     pass
  
 class OX():
-    pass 
+    pass
+
+class Mutationexchage():
+    pass
+
+class MutationInv():
+    pass

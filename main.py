@@ -1,10 +1,10 @@
 from genetic_algorithms.Classes import Matrix,BasePop,TournamentSelection
 
 def main():
-    FILE_NAME='test'
+    FILE_NAME='berlin52'
 
     m1=Matrix(FILE_NAME).txt_to_matrix()
-    b1=BasePop(m1,5).rate()
+    b1=BasePop(m1,100).rate()
     t1=TournamentSelection(3,5,b1).sellect_winners()
     print('\nMatrix \n')
     [print(x) for x in m1]
