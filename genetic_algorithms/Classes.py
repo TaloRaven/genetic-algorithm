@@ -1,5 +1,11 @@
 import random
 class Matrix():
+    '''
+        Atributes:
+
+        txt_file_name: str
+            name of matrix in txt format   
+    '''
 
     def __init__(self,txt_file_name) -> None:
         self.txt_file_name=txt_file_name
@@ -25,6 +31,16 @@ class Matrix():
                     file.write(s+'\n')
 
 class BasePop():
+    '''
+        Atributes:
+
+        matrix: list 
+            square symmetrical matrix of distance
+        n: int 
+            number of base population
+
+    '''
+
     def __init__(self,matrix, n) -> None:
         self.matrix=matrix
         self.n=n
@@ -35,11 +51,12 @@ class BasePop():
 
     def rate(self):
         rates=[]
-        for o in self.n_pop():
+        population = self.n_pop()
+        for o in population:
             n=0
             rates_uq=[]
             try:
-                for i in o:
+                for _ in o:
                     rates_uq.append(self.matrix[o[n]][o[n+1]])
                     n+=1
             except:
@@ -47,10 +64,21 @@ class BasePop():
 
             rates.append(sum(rates_uq))
 
-        return [[self.n_pop()[i],rates[i]] for i in range(len(self.n_pop()))]
+        return [[population[i],rates[i]] for i in range(len(population))]
 
 class TournamentSelection():
-    def __init__(self, n, k,basepop) -> None:
+    '''
+    Atributes:
+    
+    n: int 
+        number of participants in bracket 
+    k: int 
+        number of tournament brackets
+    basepop: list 
+        1st base population chosen randomly from matrix  
+    
+    '''
+    def __init__(self, n: int, k: int,basepop: list) -> None:
         self.n=n
         self.k=k
         self.basepop=basepop
