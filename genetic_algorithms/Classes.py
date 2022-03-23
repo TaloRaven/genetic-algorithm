@@ -84,6 +84,10 @@ class TournamentSelection():
         self.basepop=basepop
 
     def turnament(self):
+        
+        if (self.k) % 2 != 0:
+            raise ValueError("Number of k- turnament bracket  must be an even number")
+
         turnament=[]
         for _ in range(self.k):
                 bracket = random.sample(self.basepop, self.n)
