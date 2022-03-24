@@ -1,4 +1,7 @@
-from genetic_algorithms.Classes import Matrix,BasePop,TournamentSelection
+from genetic_algorithms.BasePop import *
+from genetic_algorithms.Matrix import *
+from genetic_algorithms.TournamentSelection import *
+
 
 def main():
     FILE_NAME='berlin52'
