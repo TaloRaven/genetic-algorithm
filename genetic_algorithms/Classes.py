@@ -1,4 +1,5 @@
-import random
+from random import sample, choice, randrange
+
 class Matrix():
 
     def __init__(self,txt_file_name) -> None:
@@ -31,7 +32,7 @@ class BasePop():
 
     def n_pop(self):
         m=[x for x in range(len(self.matrix))]
-        return [random.sample(m, len(m)) for _ in range(self.n)]
+        return [sample(m, len(m)) for _ in range(self.n)]
 
     def rate(self):
         rates=[]
@@ -58,7 +59,7 @@ class TournamentSelection():
     def turnament(self):
         turnament=[]
         for _ in range(self.k):
-                bracket = random.sample(self.basepop, self.n)
+                bracket = sample(self.basepop, self.n)
                 turnament.append(bracket)
         return turnament
     
@@ -75,7 +76,7 @@ class TournamentSelection():
                 else:
                     continue
             if len(winner) != 1:
-                winner = [random.choice(winner)]
+                winner = [choice(winner)]
             winners.append(winner)
         return [item for sublist in winners for item in sublist]
 
@@ -86,13 +87,45 @@ class RuleteSelection():
 class EliteSelection():
     pass
 
-class PMX():
+class Pairindividuals():
+
+    def __init__(self, turnament_selection) -> None:
+        self.turnament_selection=[x[0] for x in turnament_selection]
+
+    def intercepts(self):
+        roll1=choice(range(1, len(self.turnament_selection[0])))
+        roll2=choice(range(roll1, len(self.turnament_selection[0])))
+        return [roll1,roll2]
+        
+    def createlist(self):
+        return [item for item in range(0, len(self.turnament_selection))]
+
+    def pair_individuals(self):
+        indexes=self.createlist()
+        pairs_pn = {}
+        for p in range(len(indexes) // 2):
+            pairs_pn[p+1] = (indexes.pop(randrange(len(indexes))),
+                        indexes.pop(randrange(len(indexes))))
+        return pairs_pn
+
+    def pair_individuals_intercepts(self):
+        pairs_pn=self.pair_individuals()
+        t = self.turnament_selection
+
+        pairs=[]
+        for x in pairs_pn:
+            pairs.append((t[pairs_pn[x][0]],t[pairs_pn[x][1]],self.intercepts()))
+        return pairs
+
+
+
+class PMX(Pairindividuals):
     pass
 
-class CX():
+class CX(Pairindividuals):
     pass
  
-class OX():
+class OX(Pairindividuals):
     pass
 
 class Mutationexchage():
