@@ -29,4 +29,16 @@ class Pairindividuals():
             pairs.append((t[pairs_pn[x][0]],t[pairs_pn[x][1]],self.intercepts()))
         return pairs
 
-    
+    def intercepts_individuals(self):
+        pairs=self.pair_individuals_intercepts()
+        p2=[]
+        for x in range(len(pairs)):
+            #P1
+            p2.append([(pairs[x][0][:pairs[x][2][0]],
+            pairs[x][0][pairs[x][2][0]:pairs[x][2][1]], #P1 środek
+            pairs[x][0][pairs[x][2][1]:]),
+            #P2
+            (pairs[x][1][:pairs[x][2][0]],
+            pairs[x][1][pairs[x][2][0]:pairs[x][2][1]], #P2 środek
+            pairs[x][1][pairs[x][2][1]:])])      
+        return p2
