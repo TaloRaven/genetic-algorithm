@@ -1,7 +1,7 @@
 from genetic_algorithms.Pairindividuals import *
 
 class PMX(Pairindividuals):
-    def __init__(self, turnament_selection) -> None:
+    def __init__(self, turnament_selection):
         super().__init__(turnament_selection)
         self.pairs=self.intercepts_individuals()
     def c1_pmx(self):
@@ -44,6 +44,4 @@ class PMX(Pairindividuals):
         return c2_all
 
     def c1_c2_pmx(self):
-        c1=self.c1_pmx()
-        c2=self.c2_pmx()
-        return c1+c2
+        return self.c1_pmx()+self.c2_pmx()
