@@ -1,9 +1,10 @@
 from genetic_algorithms.Pairindividuals import *
-
+from random import random
 class PMX(Pairindividuals):
-    def __init__(self, turnament_selection):
-        super().__init__(turnament_selection)
+    def __init__(self, turnament_selection, chance_of_crossover) -> None:
+        super().__init__(turnament_selection, chance_of_crossover)
         self.pairs=self.intercepts_individuals()
+        self.chance_of_crossover=chance_of_crossover
     def c1_pmx(self):
         p2=self.pairs
         c1_all=[]
@@ -44,4 +45,8 @@ class PMX(Pairindividuals):
         return c2_all
 
     def c1_c2_pmx(self):
-        return self.c1_pmx()+self.c2_pmx()
+        if random() < self.chance_of_crossover:
+            result=self.c1_pmx()+self.c2_pmx()
+        else:
+            result=self.turnament_selection
+        return result

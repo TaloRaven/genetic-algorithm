@@ -1,9 +1,9 @@
 from random import randrange, choice
 class Pairindividuals():
 
-    def __init__(self, turnament_selection) -> None:
+    def __init__(self, turnament_selection,chance_of_crossover) -> None:
         self.turnament_selection=[x[0] for x in turnament_selection]
-
+        self.crossover=chance_of_crossover
     def intercepts(self):
         roll1=choice(range(1, len(self.turnament_selection[0])))
         roll2=choice(range(roll1, len(self.turnament_selection[0])))
