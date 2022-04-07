@@ -1,23 +1,15 @@
 
 from statistics import mean
 from unittest import result
-from Modules.BasePop import *
-from Modules.Matrix import *
-from Modules.TournamentSelection import *
-from Modules.Pairindividuals import *
-from Modules.PMX import *
-from Modules.Rate import *
-from Modules.MutationExchange import MutationExchange
-from Modules.RouletteSelection import *
+from Modules import *
+
 import random
 import pandas as pd
 import matplotlib.pyplot as plt
 from datetime import datetime
 
-
-
-
 def gen_alg( file_name: str,base_pop, max_generation,
+
     tournament_pop,
     k_participants,
     chance_to_pmx,
@@ -29,6 +21,8 @@ def gen_alg( file_name: str,base_pop, max_generation,
     A genetic algorithm that tries to find the shortest path in a TSP problem
 
     '''
+    start=datetime.now()  
+    
     ########################### Lists for Results ##############################
     result=[]
     generations=[]
@@ -40,6 +34,7 @@ def gen_alg( file_name: str,base_pop, max_generation,
 
     ########################### Algorithm ##############################
     last_nuke=0
+    nuke_count=0
     t=0
     m1=Matrix(file_name).txt_to_matrix()
     b1=BasePop(m1,base_pop).n_pop()
@@ -52,7 +47,7 @@ def gen_alg( file_name: str,base_pop, max_generation,
         pop=TournamentSelection(k_participants,tournament_pop,r1).sellect_winners()
         pop=PMX(pop,chance_to_pmx).c1_c2_pmx()
         pop=MutationExchange(pop,chance_to_mutate).mutation()
-        # pop, last_nuke=nuke(t,distatnces_min, pop,last_nuke)
+        pop, last_nuke, nuke_count=MutationBomb(t,distatnces_min,pop,last_nuke, nuke_count).bomb()
         r1=Rate(pop,m1).rate()
         rates=[y[1] for y in r1]
 
@@ -89,14 +84,27 @@ def gen_alg( file_name: str,base_pop, max_generation,
             continue
 
     # print('\n Last generation {}'.format(t))
+    # print (f"Runtime of the program is {datetime.now()-start}")
     print(f'''\n
-Mutatuion: {chance_to_mutate},Crossover: {chance_to_pmx},k_participants: {k_participants},Population: {tournament_pop},Max_generation: {max_generation},
-Best rate {result[1]}''')
+----------------------------------------------------------------------------
+----------------------------------------------------------------------------
+Mutatuion: {chance_to_mutate}, Crossover: {chance_to_pmx},
+k_participants: {k_participants}, Population: {tournament_pop},
+Max_generation: {max_generation}, RunTime: {datetime.now()-start},
+Nuke Count: {nuke_count}, Best rate {result[1]}   
+
+''')
 
 
     print("-".join(map(str,result[0])), result[1])
 
-    result=[result[0],result[1],chance_to_mutate,chance_to_pmx,k_participants,tournament_pop,max_generation]
+    result=[result[0],result[1],
+        ('chance_to_mutate',chance_to_mutate),
+        ('chance_to_pmx',chance_to_pmx),
+        ('k_participants',k_participants),
+        ('tournament_pop',tournament_pop),
+        ('max_generation', max_generation),
+        ('nuke_count', nuke_count)]
 ###########################   Plots   #################################
     if plot_results==True:
         plt.plot(generations, distatnces_max, color='r', alpha=0.1)
@@ -108,42 +116,5 @@ Best rate {result[1]}''')
 
     return result
 
-def takeSecond(elem):
-    return elem[1]
 
 
-def testing():
-    results12=[]
-    # for _ in range(30):
-    #     results.append(gen_alg('berlin52'))
-    chance_to_pmx_range=[x/100 for x in range(65,96,5)]
-    chance_to_mutate_range=[x/100 for x in range(4,19,2)]
-    k_participants_range=[2,3]
-    tournament_pop_range=[x for x in range(100,1501,100)]
-    max_generation_range=[x for x in range(1000,15000,1000)]
-
-    for chance_to_mutate in chance_to_mutate_range:
-        for chance_to_pmx in chance_to_pmx_range:
-            for k_participants in k_participants_range:
-                for tournament_pop in tournament_pop_range:
-                    for max_generation in max_generation_range:
-                        result11=gen_alg('berlin52', base_pop=200,
-                                                    max_generation=max_generation,
-                                                    tournament_pop=tournament_pop,
-                                                    k_participants=k_participants,
-                                                    chance_to_pmx=chance_to_pmx,
-                                                    chance_to_mutate=chance_to_mutate)                           
-                        results12.append(result11)
-
-                    
-    results12.sort(key=takeSecond)
-
-    print(f'\n############## Final Results ############\n')
-    for x in results12:
-        print("-".join(map(str,x[0])), x[1])
-
-    print(f'\n############## Top Result   ############\n')
-    print([print(x) for x in results12[0]])
-    print("-".join(map(str,results12[0][0])), results12[0][1])
-
-testing()
