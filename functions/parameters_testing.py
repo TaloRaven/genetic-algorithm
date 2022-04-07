@@ -1,0 +1,1 @@
+[print(x) for x in range(65,95,5)]
