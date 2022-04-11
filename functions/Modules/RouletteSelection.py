@@ -18,7 +18,6 @@ class RouletteSelection():
         max1=max([x[1] for x in self.basepop])
         for x in self.basepop:
             x[1]=max1+1-x[1]
-
         return self.basepop
 
     def chance_range(self):
@@ -38,15 +37,18 @@ class RouletteSelection():
         return rev1
 
     def roll(self):
-        suma=sum([x[1] for x in self.reverse_rating()])
+    
         new_pop=[]
         rev1=self.chance_range()
-        for _ in range(self.n_spin+1):
+        suma=rev1[-1][-1][-1]
+
+        for _ in range(self.n_spin):
             num_roll = choice(range(0,suma))
             for index, x in enumerate(rev1):
-                l=[y for y in range(x[-1][0],x[-1][1],1)]
-                if num_roll not in l:
-                    pass
+                if x[-1][0] <= num_roll <= x[-1][1]:
+                    new_pop.append(rev1[index][0])
+                    break
                 else:
-                    new_pop.append(rev1[index][:-1])
+                    continue
+                    
         return  new_pop
