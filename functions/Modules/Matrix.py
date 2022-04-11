@@ -1,9 +1,21 @@
 class Matrix():
     '''
-        Atributes:
+        Class represent a square matrix 
 
-        txt_file_name: str
-            name of matrix in txt format   
+        Atributes:
+        file_name: str
+            Name of triangular matrix matrix in txt format placed in data folder
+
+        Returns:
+        matrix: list 
+            square matrix
+
+        Methods:
+        txt_to_matrix():
+            Loads txt file and tranform it to square matrix 
+        save_matrix(file_name='matrix'):
+            Save matrix, default name 'matrix' 
+
     '''
 
     def __init__(self,txt_file_name) -> None:
@@ -15,6 +27,7 @@ class Matrix():
             for line in f.readlines()[1:]:
                 matrix.append(list(map(int,line.split())))
         f.close()
+    
 
         for count, value in enumerate(matrix):
             z=count+1
@@ -23,8 +36,8 @@ class Matrix():
                 z+=1         
         return matrix
 
-    def save_matrix(self):
-        with open("file.txt", 'w') as file:
+    def save_matrix(self, file_name='matrix'):
+        with open("{}.txt".format(file_name), 'w') as file:
                 for row in self.txt_to_matrix():
                     s = " ".join(map(str, row))
                     file.write(s+'\n')

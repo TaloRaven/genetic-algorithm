@@ -2,6 +2,7 @@ from random import sample
 
 class BasePop():
     '''
+        From matrix create random generated list of  n-inviduals 
         Atributes:
 
         matrix: list 
