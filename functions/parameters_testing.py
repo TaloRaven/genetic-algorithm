@@ -123,22 +123,22 @@ dt_string = str(now.strftime("%d-%m-%Y[%H_%M]"))
 
 
 # # 259045
-genetic_algorithm( file_name='berlin52',
-    base_pop=100,
-    max_generation=10000,
-    tournament_pop=700,
-    k_participants=2,
-    chance_to_pmx=0.8,
-    chance_to_mutate=0.2,
-    tracking=1000,
-    plot_results=True)
-
-
-
-# ga_mutliple_attempts(n=20,dt_string=dt_string, file_name='berlin52',
+# genetic_algorithm( file_name='berlin52',
 #     base_pop=100,
-#     max_generation=5000,
-#     tournament_pop=500,
-#     k_participants=5,
+#     max_generation=10000,
+#     tournament_pop=700,
+#     k_participants=2,
 #     chance_to_pmx=0.8,
-#     chance_to_mutate=0.2)
+#     chance_to_mutate=0.2,
+#     tracking=1000,
+#     plot_results=True)
+
+
+
+ga_mutliple_attempts(n=20,dt_string=dt_string, file_name='berlin52',
+    base_pop=100,
+    max_generation=500,
+    tournament_pop=50,
+    k_participants=5,
+    chance_to_pmx=0.8,
+    chance_to_mutate=0.2)

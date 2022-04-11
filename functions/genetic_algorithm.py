@@ -58,7 +58,7 @@ def genetic_algorithm( file_name: str,
         pop=TournamentSelection(k_participants,tournament_pop,r1).sellect_winners()
         pop=PMX(pop,chance_to_pmx).c1_c2_pmx()
         pop=MutationExchange(pop,chance_to_mutate).mutation()
-        pop, last_nuke, nuke_count =MutationBomb(t,distatnces_min,max_generation,pop,last_nuke, nuke_count).bomb()
+        # pop, last_nuke, nuke_count =MutationBomb(t,distatnces_min,max_generation,pop,last_nuke, nuke_count).bomb()
         r1=Rate(pop,m1).rate()
         rates=[y[1] for y in r1]
 
@@ -135,12 +135,16 @@ Nuke Count: {nuke_count}, Best rate {result[1]}
 
 ###########################   Plot   #################################
     if plot_results==True:
+        plt.title(f'''peak: {distatnces_peak[-1]}, chance_to_mutate, {chance_to_mutate},chance_to_pmx, {chance_to_pmx}, k_participants, {k_participants} \n
+        tournament_pop,{tournament_pop}, max_generation {max_generation} ''')
         plt.plot(generations, distatnces_max, color='r', alpha=0.1)
         plt.plot(generations, distatnces_avg, color='orange', alpha=0.8)
         plt.plot(generations, distatnces_min, color='b')
         plt.plot(generations, distatnces_peak, color='green', linewidth=2)
         # plt.hlines(y = 8000, xmin = 0, xmax = max_generation, color ='r')
         # plt.vlines(x = (max_generation*0.7), ymin = -1000, ymax = 1000, color ='r')
+        plt.ylabel('Distance')
+        plt.xlabel('t-generations')
         plt.legend(['max', 'avg','min_for_t','peak_all_time'], loc='upper right')
         plt.show()
 
