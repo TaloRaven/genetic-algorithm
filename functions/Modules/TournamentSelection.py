@@ -42,4 +42,5 @@ class TournamentSelection():
             if len(winner) != 1:
                 winner=[choice(winner)]
             winners.append(winner)
-        return [item for sublist in winners for item in sublist]
+        turnament_selection=[item for sublist in winners for item in sublist]
+        return [x[0] for x in turnament_selection]

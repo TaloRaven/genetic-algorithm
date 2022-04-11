@@ -1,5 +1,15 @@
 from random import choice, random, sample
 class MutationExchange():
+    """
+    Mutatation exchange for population 
+
+    Atributes:
+    post_cross_population:
+        population after crossover 
+    mutation_rate:
+        propability to mutate chosen character in population 
+    
+    """
     def __init__(self,post_cross_population, mutation_rate):
         self.post_cross_population=post_cross_population
         self.mutation_rate=mutation_rate
