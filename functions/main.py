@@ -4,11 +4,13 @@ import random
 import pandas as pd
 import matplotlib.pyplot as plt
 from datetime import datetime
-from functions.gen_alg import gen_alg
-from functions.parameters_testing import testing
+from genetic_algorithm import genetic_algorithm
+from parameters_testing import ga_parameters_testing
+
+
 
 if __name__ == "__main__":
     start=datetime.now()    
-    testing('berlin52')
+    ga_parameters_testing('berlin52')
     print (f"Runtime of the program:  {datetime.now()-start}")
     
