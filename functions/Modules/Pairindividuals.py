@@ -1,7 +1,7 @@
 from random import randrange, choice
 class Pairindividuals():
     """
-    Population preperation to crossover 
+    Population preperation, parent paring to crossover  
 
     Atributes:
     touranment_selection:

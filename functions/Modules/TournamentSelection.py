@@ -1,3 +1,4 @@
+from email.mime import base
 from random import sample, choice
 class TournamentSelection():
     '''
@@ -11,19 +12,19 @@ class TournamentSelection():
         1st base population chosen randomly from matrix  
     
     '''
-    def __init__(self, n: int, k: int,basepop: list) -> None:
-        self.n=n
-        self.k=k
+    def __init__(self, k_participants: int, n_brackets: int,basepop: list) -> None:
         self.basepop=basepop
-
+        self.k_participants=k_participants
+        self.n_brackets=n_brackets
+        
     def turnament(self):
         
-        if (self.k) % 2 != 0:
+        if (self.n_brackets) % 2 != 0:
             raise ValueError("Number of k- turnament bracket  must be an even number")
 
         turnament=[]
-        for _ in range(self.k):
-                bracket = sample(self.basepop, self.n)
+        for _ in range(self.n_brackets):
+                bracket = sample(self.basepop, self.k_participants)
                 turnament.append(bracket)
         return turnament
     

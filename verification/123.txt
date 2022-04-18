@@ -1,1 +1,0 @@
-python check_result.py berlin52.txt berlin52_wynik.txt
