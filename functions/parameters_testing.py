@@ -70,7 +70,7 @@ def ga_parameters_testing(file_name, dt_string):
             json.dump(results12, f) 
 
 
-def ga_mutliple_attempts(dt_string,n,file_name,
+def ga_mutliple_attempts(n,file_name,
                                 base_pop,
                                 max_generation,
                                 tournament_pop,
@@ -99,19 +99,33 @@ def ga_mutliple_attempts(dt_string,n,file_name,
                         tracking,
                         start_roulete)                       
         results12.append(result11)
-    sorted(results12, key=lambda d: d['Fitness']) 
+    results12=sorted(results12, key=lambda d: d['Fitness']) 
     
     print(f'\n############## Final Results ############\n')
     [print("-".join(map(str,x['Result'])), x['Fitness']) for x in results12]
         
 
     print(f'\n############## Top Result   ############\n')
-    print([print(x) for x in results12[0][1:]])
-    print("-".join(map(str,results12[0][0])), results12[0][1])
+    print("-".join(map(str,results12[0]['Result'])), results12[0]['Fitness'])
+
+    print(f'''
+    Name {results12[0]["Name"]}
+    Fitness {results12[0]['Fitness']}
+    RunTime {results12[0]['RunTime']}
+    chance_to_mutate {results12[0]['chance_to_mutate']}
+    chance_to_pmx {results12[0]['chance_to_pmx']}
+    k_participants {results12[0]['k_participants']}
+    tournament_pop {results12[0]['tournament_pop']}
+    max_generation {results12[0]['max_generation']}
+    nuke_count {results12[0]['nuke_count']}
+ 
+    ''')
+    print("-".join(map(str,results12[0]['Result'])), results12[0]['Fitness'])
 
 
     now = datetime.now()
     dt_string = str(now.strftime("%d-%m-%Y[%H_%M]"))
+
     with open(f"data/results/multi{dt_string}.json", 'w') as f:
             json.dump(results12, f) 
 
@@ -120,14 +134,13 @@ def ga_mutliple_attempts(dt_string,n,file_name,
     print(f"\nTest Time: {datetime.now()-test_start}")
 
 
-now = datetime.now()
-dt_string = str(now.strftime("%d-%m-%Y[%H_%M]"))
 
-ga_mutliple_attempts(dt_string,n=2,
+
+ga_mutliple_attempts(n=5,
                         file_name='berlin52',
                         base_pop=200,
-                        max_generation=10000,
-                        tournament_pop=50,
+                        max_generation=50000,
+                        tournament_pop=20,
                         k_participants=2,
                         chance_to_pmx=0,
                         chance_to_mutate=1,

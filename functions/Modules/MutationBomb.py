@@ -1,6 +1,6 @@
-from Modules.MutationExchange import MutationExchange
+from Modules.Mutation import Mutation
 
-class MutationBomb(MutationExchange):
+class MutationBomb(Mutation):
     """
     Rapid, cyclicall mutliple mutation that helps algorithm to leave local optimum with hard reshuffle
 
@@ -36,7 +36,7 @@ class MutationBomb(MutationExchange):
                     
                     if self.distances_min[-1]-self.distances_min[self.t-int(self.t*0.20)]== 0:
                         for _ in range(25):
-                            self.pop=MutationExchange(self.pop,1).mutation()
+                            self.pop=Mutation(self.pop,1).exchange()
                         self.last_nuke=0
                         self.nuke_count+=1
                         

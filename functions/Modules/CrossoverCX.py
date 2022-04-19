@@ -7,7 +7,7 @@ class CX(Pairindividuals):
         super().__init__(turnament_selection, chance_of_crossover)
         self.chance_of_crossover=chance_of_crossover
 
-    def ox(self):
+    def cx(self):
         pairs=self.pair_individuals_intercepts()
         new_pop=[]
         for pair in pairs:
@@ -22,9 +22,13 @@ class CX(Pairindividuals):
 
                 # tutaj zamiast zera moge nawet dac random liczbe przez co 
                 # zaczynam z innego miejsca
-                start_cykl=random.choice(range(0, len(p1)))
-                cykl1.append(p1[start_cykl])
-                cykl1.append(p2[start_cykl])
+                # start_cykl=random.choice(range(0, len(p1)))
+                # cykl1.append(p1[start_cykl])
+                # cykl1.append(p2[start_cykl])
+
+                cykl1.append(p1[0])
+                cykl1.append(p2[0])
+
 
                 while cykl1[0] != cykl1[-1]:
                     for  index, x in enumerate(zip(p1, p2)):

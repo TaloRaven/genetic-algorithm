@@ -1,7 +1,10 @@
 
 from statistics import mean
 from Modules import *
-from Modules import CrossoverCX, CrossoverPMX,MutationBomb
+from Modules.CrossoverPMX import PMX
+from Modules.CrossoverOX import OX
+from Modules.CrossoverCX import CX
+
 import json
 import random
 import pandas as pd
@@ -43,7 +46,7 @@ def genetic_algorithm(  file_name: str,
     k_participants: int
         number of praticipants in one bracket of a tournament
     chance_to_pmx: float (0:1)
-        Propability to crossover pair of parents into pair of children  
+        Propability of crossover pair of parents into pair of children  
     chance_to_mutate: float(0:1)
         Propability of mutation invidual
     tracing: int
@@ -78,7 +81,7 @@ def genetic_algorithm(  file_name: str,
     r1=Rate(pop,m1).rate()
 
     while not t==max_generation :
-        #cROSS OVER START 
+        # cROSS OVER START 
         # chance_to_mutate=t/max_generation
         # chance_to_pmx=1-t/max_generation
         
@@ -86,19 +89,31 @@ def genetic_algorithm(  file_name: str,
         chance_to_mutate=1-t/max_generation
         chance_to_pmx=t/max_generation
         
-        if t > max_generation*start_roulete: 
-            pop=RouletteSelection(tournament_pop,r1).roll()
+        #MUTATION START 
+        # chance_to_mutate=0.8-t/max_generation*0.85
+        # chance_to_pmx=t/max_generation+0.05*max_generation
+
+
+        if t < max_generation*start_roulete:
+            pop=TournamentSelection(k_participants,tournament_pop,r1).sellect_winners()
+            # pop=RouletteSelection(tournament_pop,r1).roll()
             # pop=PMX(pop,chance_to_pmx).c1_c2_pmx()
-            pop=CX(pop,chance_to_pmx).ox()
-            pop=MutationExchange(pop,chance_to_mutate).mutation()
+            pop=CX(pop,chance_to_pmx).cx()
+            # pop=OX(pop,chance_to_pmx).ox()
+            pop=Mutation(pop,chance_to_mutate).exchange()
             # pop, last_nuke, nuke_count =MutationBomb(t,distatnces_min,max_generation,pop,last_nuke, nuke_count).bomb()
 
-        else: ## Tournament
-            pop=TournamentSelection(k_participants,tournament_pop,r1).sellect_winners()
-            pop=PMX(pop,chance_to_pmx).c1_c2_pmx()
-            # pop=CX(pop,chance_to_pmx).ox()
-            pop=MutationExchange(pop,chance_to_mutate).mutation()
+        else:
+            # pop=TournamentSelection(k_participants,tournament_pop,r1).sellect_winners() 
+            pop=RouletteSelection(tournament_pop,r1).roll()
+            # pop=PMX(pop,chance_to_pmx).c1_c2_pmx()
+            pop=CX(pop,chance_to_pmx).cx()
+            # pop=OX(pop,chance_to_pmx).ox()
+            pop=Mutation(pop,chance_to_mutate).inversion()
             # pop, last_nuke, nuke_count =MutationBomb(t,distatnces_min,max_generation,pop,last_nuke, nuke_count).bomb()
+
+
+
 
         ## Rate 
         r1=Rate(pop,m1).rate()
