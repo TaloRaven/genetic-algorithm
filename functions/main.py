@@ -25,7 +25,7 @@ if __name__ == "__main__":
                         chance_to_pmx=0.95,
                         chance_to_mutate=0.05,
                         tracking=10000,
-                        start_roulete=0.5,
+                        start_roulete=0.1,
                         save_results=True,
                         plot_results=True)
                         

@@ -6,6 +6,6 @@ from Modules.CrossoverPMX import *
 from Modules.CrossoverOX import *
 from Modules.CrossoverCX import *
 from Modules.Rate import *
-from Modules.MutationExchange import *
+from Modules.Mutation import *
 from Modules.RouletteSelection import *
 from Modules.MutationBomb import *

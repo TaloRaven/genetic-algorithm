@@ -85,13 +85,13 @@ def genetic_algorithm(  file_name: str,
         # chance_to_mutate=t/max_generation
         # chance_to_pmx=1-t/max_generation
         
-        #MUTATION START 
-        chance_to_mutate=1-t/max_generation
-        chance_to_pmx=t/max_generation
+        # #MUTATION START ten kozak
+        # chance_to_mutate=1-t/max_generation
+        # chance_to_pmx=t/max_generation
         
         #MUTATION START 
-        # chance_to_mutate=0.8-t/max_generation*0.85
-        # chance_to_pmx=t/max_generation+0.05*max_generation
+        chance_to_mutate=0.5-t/max_generation*0.5
+        chance_to_pmx=t/max_generation+0.03*max_generation
 
 
         if t < max_generation*start_roulete:
@@ -129,9 +129,11 @@ def genetic_algorithm(  file_name: str,
 
         ## Tracking algorithm progress              
         if tracking==None:
-            t=t+1    
+            t=t+1
         elif t%tracking!=0:    
             t=t+1
+        elif tracking==0:
+            t=t+1        
         else:
             print('Gen: {}, with best score: {}'.format(t,min(rates)))
             t=t+1
@@ -160,6 +162,7 @@ def genetic_algorithm(  file_name: str,
     result_dict={
         "Name": file_name,
         'Fitness': result[0][1],
+        "Global_optimum": get_optimum(file_name),
         'RunTime': str(datetime.now()-start),
         'chance_to_mutate': chance_to_mutate,
         'chance_to_pmx': chance_to_pmx,

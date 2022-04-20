@@ -70,15 +70,7 @@ def ga_parameters_testing(file_name, dt_string):
             json.dump(results12, f) 
 
 
-def ga_mutliple_attempts(n,file_name,
-                                base_pop,
-                                max_generation,
-                                tournament_pop,
-                                k_participants,
-                                chance_to_pmx,
-                                chance_to_mutate,
-                                tracking,
-                                start_roulete):
+def ga_mutliple_attempts(n):
 
     """Function to test mutliple times genetic_algorithm,with chosen one set of parameters
     
@@ -89,15 +81,16 @@ def ga_mutliple_attempts(n,file_name,
 
     results12=[]
     for _ in range(0,n): 
-        result11=genetic_algorithm( file_name,
-                        base_pop,
-                        max_generation,
-                        tournament_pop,
-                        k_participants,
-                        chance_to_pmx,
-                        chance_to_mutate,
-                        tracking,
-                        start_roulete)                       
+        result11=genetic_algorithm( file_name='berlin52',
+                        base_pop=100,
+                        max_generation=50000,
+                        tournament_pop=50,
+                        k_participants=2,
+                        chance_to_pmx=0.95,
+                        chance_to_mutate=0.05,
+                        tracking=None,
+                        start_roulete=0.5)     
+
         results12.append(result11)
     results12=sorted(results12, key=lambda d: d['Fitness']) 
     
@@ -133,16 +126,4 @@ def ga_mutliple_attempts(n,file_name,
 
     print(f"\nTest Time: {datetime.now()-test_start}")
 
-
-
-
-ga_mutliple_attempts(n=5,
-                        file_name='berlin52',
-                        base_pop=200,
-                        max_generation=50000,
-                        tournament_pop=20,
-                        k_participants=2,
-                        chance_to_pmx=0,
-                        chance_to_mutate=1,
-                        tracking=1000,
-                        start_roulete=0.7) 
+ga_mutliple_attempts(n=30)

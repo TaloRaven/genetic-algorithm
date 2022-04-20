@@ -7,7 +7,7 @@ from datetime import datetime
 import json
 import re
 
-
+import pandas as pd 
 
 os.makedirs(r'C:\Users\macie\Desktop\Projects\ue_zsi\data\results', exist_ok=True)
 
@@ -18,7 +18,7 @@ def takeSecond(elem):
 def load_result():
     pass
 
-def save_result(result, format: str):
+def save_result(result, format: str) -> None:
     """
     result: dict
         result from genetic_algorithm
@@ -26,13 +26,20 @@ def save_result(result, format: str):
         availible formats 'json', 'csv'
     """
     # assume you have the following dictionary
-    now = datetime.now()
-    dt_string = str(now.strftime("%H.%M_%d-%m-%Y"))
+    if format=='json':
+        now = datetime.now()
+        dt_string = str(now.strftime("%H.%M_%d-%m-%Y"))
 
-    with open("results/{}_{}.json".format(result['Name'], dt_string), "w+") as write_file:
-        json.dump(result, write_file, sort_keys=True, default=str)
+        with open("results/{}_{}.json".format(result['Name'], dt_string), "w+") as write_file:
+            json.dump(result, write_file, sort_keys=True, default=str)
+    else:
+        now = datetime.now()
+        dt_string = str(now.strftime("%H.%M_%d-%m-%Y"))
 
-def get_optimum(file_name):
+        df=pd.DataFrame.from_dict(result, orient='index',columns=['distances_max', 'distances_avg', 'distances_min'])
+        df.head()
+
+def get_optimum(file_name)-> int:
     """ get global optimum value from txt file with perfect scores for chosen TSP problems """
 
     with open("data/tsp_optima.txt", "r") as f:
@@ -53,7 +60,7 @@ def get_optimum(file_name):
     
     return optimum
 
-def plot_result(result: dict):
+def plot_result(result: dict) -> plt.show():
     """Line plot showing algorithm progression with finding global optimum """
     # plt.title(f'''peak: {distatnces_peak[-1]}, chance_to_mutate, {chance_to_mutate},chance_to_pmx, {chance_to_pmx}, k_participants, {k_participants} \n
     # tournament_pop,{tournament_pop}, max_generation {max_generation} ''')
@@ -81,6 +88,7 @@ def plot_result(result: dict):
     plt.text(0.7, 0.7, f"""
 
     'Fitness': {result['Fitness']}
+    "Global optimum": {result['Global_optimum']}
     'chance_to_mutate': {result['chance_to_mutate']}
     'chance_to_pmx': {result['chance_to_pmx']}
     'k_participants': {result['chance_to_pmx']}
