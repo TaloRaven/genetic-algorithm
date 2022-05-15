@@ -1,7 +1,7 @@
     
 from Modules.Pairindividuals import *
 import random
-from random import randint
+from random import randint, random
 
 class Crossover(Pairindividuals):
     def __init__(self, turnament_selection, chance_of_crossover):
@@ -11,7 +11,7 @@ class Crossover(Pairindividuals):
     
     
     
-    def cx(self):
+    def cx(self)->list:
         pairs=self.pair_individuals_intercepts()
         new_pop=[]
         for pair in pairs:
@@ -60,7 +60,7 @@ class Crossover(Pairindividuals):
         new_pop = []
         no_cross = []
         for x in pairs:
-            if random() >= self.chance_to_ox:
+            if random() >= self.chance_of_crossover:
                 parent1 = x[0]
                 parent2 = x[1]
 
@@ -113,7 +113,7 @@ class Crossover(Pairindividuals):
 
         return new_pop + no_cross
 
-    def pmx(self):
+    def pmx(self)-> list:
         p2=self.pairs
         no_pmx=[]
         c1_all=[]

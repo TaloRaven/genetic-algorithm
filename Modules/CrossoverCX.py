@@ -3,8 +3,8 @@ from Modules.Pairindividuals import *
 import random
 
 class CX(Pairindividuals):
-    def __init__(self, turnament_selection, chance_of_crossover):
-        super().__init__(turnament_selection, chance_of_crossover)
+    def __init__(self, tournament_selection, chance_of_crossover):
+        super().__init__(tournament_selection, chance_of_crossover)
         self.chance_of_crossover=chance_of_crossover
 
     def cx(self):

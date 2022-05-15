@@ -89,9 +89,9 @@ def plot_result(result: dict) -> plt.show():
 
     'Fitness': {result['Fitness']}
     "Global optimum": {result['Global_optimum']}
-    'chance_to_mutate': {result['chance_to_mutate']}
-    'chance_to_pmx': {result['chance_to_pmx']}
-    'k_participants': {result['chance_to_pmx']}
+    'mutation_chance': {result['mutation_chance']}
+    'crossover_chance': {result['crossover_chance']}
+    'k_participants': {result['k_participants']}
     'tournament_pop': {result['tournament_pop']}
     'max_generation': {result['max_generation']}
     'nuke_count': {result['nuke_count']}

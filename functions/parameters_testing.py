@@ -1,11 +1,9 @@
 from genetic_algorithm import genetic_algorithm
 from datetime import datetime
 import json
-import pandas as pd
-
+from Modules import *
 from utils import  takeSecond
-
-
+from statistics import mean
 def ga_parameters_testing(file_name, dt_string):
     """Function to test multiple parameters for genetic_algorithm
     Parameters:
@@ -70,7 +68,18 @@ def ga_parameters_testing(file_name, dt_string):
             json.dump(results12, f) 
 
 
-def ga_mutliple_attempts(n):
+def ga_mutliple_attempts(n,file_name: str,
+                        base_pop: int,
+                        max_generation: int,
+                        tournament_pop: int,
+                        k_participants: int,
+                        dhm_ilc: bool,
+                        crossover_chance: float,
+                        mutation_chance: float,
+                        exploitation_start: float,
+                        tracking: int or None,
+                        plot_results: bool,
+                        save_results: bool):
 
     """Function to test mutliple times genetic_algorithm,with chosen one set of parameters
     
@@ -81,15 +90,16 @@ def ga_mutliple_attempts(n):
 
     results12=[]
     for _ in range(0,n): 
-        result11=genetic_algorithm( file_name='berlin52',
-                        base_pop=100,
-                        max_generation=50000,
-                        tournament_pop=50,
-                        k_participants=2,
-                        chance_to_pmx=0.95,
-                        chance_to_mutate=0.05,
-                        tracking=None,
-                        start_roulete=0.5)     
+        result11=genetic_algorithm( file_name=file_name,
+                        base_pop=base_pop,
+                        max_generation=max_generation,
+                        tournament_pop=tournament_pop,
+                        k_participants=k_participants,
+                        dhm_ilc=dhm_ilc,
+                        crossover_chance=crossover_chance,
+                        mutation_chance=mutation_chance,
+                        exploitation_start=exploitation_start,
+                        tracking=tracking) 
 
         results12.append(result11)
     results12=sorted(results12, key=lambda d: d['Fitness']) 
@@ -99,31 +109,21 @@ def ga_mutliple_attempts(n):
         
 
     print(f'\n############## Top Result   ############\n')
-    print("-".join(map(str,results12[0]['Result'])), results12[0]['Fitness'])
+    
 
-    print(f'''
-    Name {results12[0]["Name"]}
-    Fitness {results12[0]['Fitness']}
-    RunTime {results12[0]['RunTime']}
-    chance_to_mutate {results12[0]['chance_to_mutate']}
-    chance_to_pmx {results12[0]['chance_to_pmx']}
-    k_participants {results12[0]['k_participants']}
-    tournament_pop {results12[0]['tournament_pop']}
-    max_generation {results12[0]['max_generation']}
-    nuke_count {results12[0]['nuke_count']}
- 
-    ''')
-    print("-".join(map(str,results12[0]['Result'])), results12[0]['Fitness'])
+    print('\nResults\n')
+    for key, value in results12[0].items():
+        if key not in ['distances_max', 'distances_avg', 'distances_min', 'distances_peak', 'Result']:
+            print(key, ' : ',value )
+    print('\n')
 
+    print("-".join(map(str,results12[0]['Result'])), results12[0]['Fitness'])
 
     now = datetime.now()
     dt_string = str(now.strftime("%d-%m-%Y[%H_%M]"))
-
-    with open(f"data/results/multi{dt_string}.json", 'w') as f:
-            json.dump(results12, f) 
-
-
-
     print(f"\nTest Time: {datetime.now()-test_start}")
 
-ga_mutliple_attempts(n=30)
+    # with open(f"data/results/multi{dt_string}.json", 'w') as f:
+    #         json.dump(results12, f) 
+
+
